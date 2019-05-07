@@ -1,0 +1,98 @@
+{
+    "type": "object",
+    "properties": {
+        "requestBody": {
+            "description": "Describes a query to be executed.",
+            "properties": {
+                "facets": {
+                    "description": "An array of facet requests to be computed against the query result.",
+                    "items": {
+                        "description": "A request to compute additional statistics (facets) over the query results.",
+                        "properties": {
+                            "expression": {
+                                "description": "The column or list of columns to summarize by",
+                                "type": "string"
+                            },
+                            "options": {
+                                "description": "The options for facet evaluation",
+                                "properties": {
+                                    "filter": {
+                                        "description": "Specifies the filter condition for the 'where' clause which will be run on main query's result, just before the actual faceting.",
+                                        "type": "string"
+                                    },
+                                    "sortBy": {
+                                        "description": "The column name or query expression to sort on. Defaults to count if not present.",
+                                        "type": "string"
+                                    },
+                                    "sortOrder": {
+                                        "default": "desc",
+                                        "description": "The sorting order by the selected column (count by default).",
+                                        "enum": [
+                                            "asc",
+                                            "desc"
+                                        ],
+                                        "type": "string",
+                                        "x-ms-enum": {
+                                            "modelAsString": false,
+                                            "name": "FacetSortOrder"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "expression"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array"
+                },
+                "options": {
+                    "description": "The query evaluation options",
+                    "properties": {
+                        "_skip": {
+                            "description": "The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present.",
+                            "format": "int32",
+                            "minimum": 0,
+                            "type": "integer"
+                        },
+                        "_skipToken": {
+                            "description": "Continuation token for pagination, capturing the next page size and offset, as well as the context of the query.",
+                            "type": "string"
+                        },
+                        "_top": {
+                            "description": "The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present.",
+                            "format": "int32",
+                            "maximum": 1000,
+                            "minimum": 1,
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "query": {
+                    "description": "The resources query.",
+                    "type": "string"
+                },
+                "subscriptions": {
+                    "description": "Azure subscriptions against which to execute the query.",
+                    "items": {
+                        "description": "Subscription Id.",
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "subscriptions",
+                "query"
+            ],
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}
